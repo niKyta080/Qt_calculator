@@ -1,0 +1,75 @@
+from PyQt6 import QtCore, QtGui, QtWidgets
+
+
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(458, 212)
+        self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.lineEdit = QtWidgets.QLineEdit(parent=self.centralwidget)
+        self.lineEdit.setGeometry(QtCore.QRect(30, 10, 411, 151))
+        self.lineEdit.setObjectName("lineEdit")
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(parent=MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+        self.menubar = QtWidgets.QMenuBar(parent=MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 458, 21))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.toolBar = QtWidgets.QToolBar(parent=MainWindow)
+        self.toolBar.setObjectName("toolBar")
+        MainWindow.addToolBar(QtCore.Qt.ToolBarArea.TopToolBarArea, self.toolBar)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.toolBar.setWindowTitle(_translate("MainWindow", "toolBar"))
+
+
+class Window(QtWidgets.QMainWindow, Ui_MainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        # self.pushButton.clicked.connect(self.buttonClicked)
+        # self.pushButton_2.clicked.connect(self.buttonClicked)
+        self.plus = QtGui.QAction(QtGui.QIcon("треуг.png"), "+", self)
+        self.toolBar.addAction(self.plus)
+        self.minus = QtGui.QAction(QtGui.QIcon("круг.png"), "-", self)
+        self.toolBar.addAction(self.minus)
+        self.kvadr = QtGui.QAction(QtGui.QIcon('квадрат.png'),'', self)
+        self.toolBar.addAction(self.kvadr)
+        self.plus.triggered.connect(self.text)
+        self.minus.triggered.connect(self.text1)
+        self.kvadr.triggered.connect(self.text2)
+    def text(self):
+        self.lineEdit.setText('P = a + b + c          S = 1/2 * a * h')
+
+    def text1(self):
+        self.lineEdit.setText('P = 2 · π · r          S = π × r2')
+
+    def text2(self):
+        self.lineEdit.setText('P = a * 4          S = a * a')
+
+
+
+
+    # def buttonClicked(self):
+    #     print('1')
+    #     sender = self.sender()
+    #     self.textEdit.setPlainText(sender.text() + ' была нажата')
+
+
+if __name__ == "__main__":
+    import sys
+
+    app = QtWidgets.QApplication(sys.argv)
+    # MainWindow = QtWidgets.QMainWindow()
+    ui = Window()
+    # ui.setupUi(MainWindow)
+    ui.show()
+    sys.exit(app.exec())
