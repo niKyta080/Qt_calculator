@@ -1,0 +1,88 @@
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(800, 600)
+        self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(parent=MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+        self.menubar = QtWidgets.QMenuBar(parent=MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
+        self.menubar.setObjectName("menubar")
+        self.menu = QtWidgets.QMenu(parent=self.menubar)
+        self.menu.setObjectName("menu")
+        self.menu_2 = QtWidgets.QMenu(parent=self.menubar)
+        self.menu_2.setObjectName("menu_2")
+        self.menu_3 = QtWidgets.QMenu(parent=self.menubar)
+        self.menu_3.setObjectName("menu_3")
+        self.menu_4 = QtWidgets.QMenu(parent=self.menu_3)
+        self.menu_4.setObjectName("menu_4")
+        MainWindow.setMenuBar(self.menubar)
+        self.action = QtGui.QAction(parent=MainWindow)
+        self.action.setObjectName("action")
+        self.action_2 = QtGui.QAction(parent=MainWindow)
+        self.action_2.setObjectName("action_2")
+        self.action_4 = QtGui.QAction(parent=MainWindow)
+        self.action_4.setObjectName("action_4")
+        self.action_5 = QtGui.QAction(parent=MainWindow)
+        self.action_5.setObjectName("action_5")
+        self.action_6 = QtGui.QAction(parent=MainWindow)
+        self.action_6.setObjectName("action_6")
+        self.menu.addAction(self.action)
+        self.menu.addAction(self.action_2)
+        self.menu_4.addAction(self.action_4)
+        self.menu_4.addAction(self.action_5)
+        self.menu_4.addAction(self.action_6)
+        self.menu_3.addAction(self.menu_4.menuAction())
+        self.menubar.addAction(self.menu.menuAction())
+        self.menubar.addAction(self.menu_2.menuAction())
+        self.menubar.addAction(self.menu_3.menuAction())
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.menu.setTitle(_translate("MainWindow", "Файл"))
+        self.menu_2.setTitle(_translate("MainWindow", "Настройка"))
+        self.menu_3.setTitle(_translate("MainWindow", "Список любимчиков"))
+        self.menu_4.setTitle(_translate("MainWindow", "кошечки"))
+        self.action.setText(_translate("MainWindow", "добавить"))
+        self.action_2.setText(_translate("MainWindow", "удалить"))
+        self.action_4.setText(_translate("MainWindow", "Буся"))
+        self.action_5.setText(_translate("MainWindow", "Муся"))
+        self.action_6.setText(_translate("MainWindow", "Корона"))
+
+class Window(QtWidgets.QMainWindow, Ui_MainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        self.list = [self.menu]
+        self.action.triggered.connect(self.new)
+        self.action_2.triggered.connect(self.delete)
+
+    def new(self):
+        obj = QtWidgets.QMenu(self.menubar)
+        name = str(random.randint(0, 2456))
+        obj.setObjectName(name)
+        self.menubar.addAction(obj.menuAction())
+        _translate = QtCore.QCoreApplication.translate
+        obj.setTitle(_translate("MainWindow", name))
+        self.list.append(obj)
+
+    def delete(self):
+        obj = self.list.pop(-1)
+
+        obj.deleteLater()
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    #MainWindow = QtWidgets.QMainWindow()
+    ui = Window()
+    #ui.setupUi(MainWindow)
+    ui.show()
+    sys.exit(app.exec())
